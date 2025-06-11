@@ -29,4 +29,12 @@ public class Jornada {
     @Column(name = "precio_por_hora", nullable = false)
     private Double precioPorHora;
 
+    @ManyToOne
+    @JoinColumn(name = "id_semana", nullable = false, foreignKey = @ForeignKey(name = "fk_semana"))
+    private Semana semana;
+
+    @ManyToOne
+    @JoinColumn(name = "id_estado_disponibilidad", nullable = false, foreignKey = @ForeignKey(name = "fk_estado_disponibilidad"))
+    private EstadoDisponibilidad estadoDisponibilidad;
+
 }

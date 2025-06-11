@@ -27,11 +27,11 @@ public class Reserva {
     @Column(name = "fecha_reserva", nullable = false)
     private Date fechaReserva;
 
-    @Column(name = "hora_inicio", nullable = false)
-    private LocalTime horaInicio;
+    @Column(name = "hora_entrada", nullable = false)
+    private LocalTime horaEntrada;
 
-    @Column(name = "hora_fin", nullable = false)
-    private LocalTime horaFin;
+    @Column(name = "hora_salida", nullable = false)
+    private LocalTime horaSalida;
 
     @Column(name = "precio_total", nullable = false)
     private Double precioTotal;
@@ -39,9 +39,9 @@ public class Reserva {
     @Column(name = "fecha_creacion", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "estado", nullable = false)
+    @Column(name = "estado_reserva", nullable = false)
     @Enumerated(EnumType.STRING)
-    private EstadoReserva estado;
+    private EstadoReserva estadoReserva;
 
     private enum EstadoReserva {
         PENDIENTE,
@@ -57,4 +57,20 @@ public class Reserva {
             return this.name();
         }
     }
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "fk_usuario"))
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_lugar", nullable = false, foreignKey = @ForeignKey(name = "fk_lugar"))
+    private Lugar lugar;
+
+    @ManyToOne
+    @JoinColumn(name = "id_metodo_pago", nullable = false, foreignKey = @ForeignKey(name = "fk_metodo_pago"))
+    private MetodoPago metodoPago;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cancha", nullable = false, foreignKey = @ForeignKey(name = "fk_cancha"))
+    private Cancha cancha;
 }

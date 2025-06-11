@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class Zona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "id_zona")
+    private Integer idZona;
 
     @Column(name = "departamento")
     private String departamento;

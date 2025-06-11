@@ -16,18 +16,22 @@ import lombok.NoArgsConstructor;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "apellido")
+    @Column(name = "apellido", nullable = false)
     private String apellido;
 
-    @Column(name = "correo")
+    @Column(name = "correo", nullable = false)
     private String correo;
 
-    @Column(name = "contrasena")
+    @Column(name = "contrasena", nullable = false, unique = true)
     private String contrasena;
+
+    @ManyToOne
+    @JoinColumn(name = "id_rol", nullable = false, foreignKey = @ForeignKey(name = "fk_rol"))
+    private Rol rol;
 }

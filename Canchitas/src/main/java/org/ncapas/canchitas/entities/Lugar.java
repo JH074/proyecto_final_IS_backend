@@ -16,7 +16,8 @@ public class Lugar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_lugar")
+    private Integer idLugar;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -26,5 +27,13 @@ public class Lugar {
 
     @Column(name = "codigo_establecimiento", nullable = false)
     private Integer capacidad;
+
+    @ManyToOne
+    @JoinColumn(name = "id_zona", nullable = false, foreignKey = @ForeignKey(name = "fk_zona"))
+    private Zona zona;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cancha", nullable = false, foreignKey = @ForeignKey(name = "fk_cancha"))
+    private Cancha cancha;
 
 }

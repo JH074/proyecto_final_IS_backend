@@ -15,7 +15,8 @@ import lombok.Builder;
 public class Cancha {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_cancha", nullable = false)
+    private Integer idCancha;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -25,4 +26,16 @@ public class Cancha {
 
     @Column(name = "numero_cancha", nullable = false)
     private Integer numeroCancha;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_cancha", nullable = false, foreignKey = @ForeignKey(name = "fk_tipo_cancha"))
+    private TipoCancha tipoCancha;
+
+    @ManyToOne
+    @JoinColumn(name = "id_jornada", nullable = false, foreignKey = @ForeignKey(name = "fk_jornada"))
+    private Jornada jornada;
+
+    @ManyToOne
+    @JoinColumn(name = "id_lugar", nullable = false, foreignKey = @ForeignKey(name = "fk_lugar"))
+    private Lugar lugar;
 }

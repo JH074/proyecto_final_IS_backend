@@ -16,8 +16,8 @@ public class Semana {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "id_semana")
+    private Integer idSemana;
 
     @Column(name = "dia")
     private Dia dia;
