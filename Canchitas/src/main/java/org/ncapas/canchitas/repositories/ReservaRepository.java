@@ -7,19 +7,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReservaRepository extends JpaRepository<Reserva, Long> {
-    //para buscar mis reservaciones por id del usuario
-    List<Reserva> findByUsuarioId(Integer idUsuario);
-    //para buscar las reservas por id de la cancha
-    List<Reserva> findByCanchaId(Integer idCancha);
-    //para ver las reservas por id del lugar de la cancha
-    List<Reserva> findByLugarCanchaIdLugar(Integer idLugar);
-    //para buscar las reservas por id del usuario y id de la cancha
-    List<Reserva> findByUsuarioIdAndCanchaId(Integer idUsuario, Integer idCancha);
-    //para mostrar las reservas por su estado
+public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
+
+    // Busca todas las reservas por id del usuario
+    List<Reserva> findByUsuario_IdUsuario(Integer idUsuario);
+
+    // Busca todas las reservas por id de la cancha
+    List<Reserva> findByCancha_IdCancha(Integer idCancha);
+
+    // Busca todas las reservas cuyo lugar (en cancha.lugar) tenga este id
+    List<Reserva> findByCancha_Lugar_IdLugar(Integer idLugar);
+
+    // Busca reservas por usuario y cancha
+    List<Reserva> findByUsuario_IdUsuarioAndCancha_IdCancha(Integer idUsuario, Integer idCancha);
+
+    // Busca reservas por estado
     List<Reserva> findByEstadoReserva(Reserva.EstadoReserva estadoReserva);
-    //para mostrar las reservas por id del usuario y su estado
-    List<Reserva> findByUsuarioIdAndEstadoReserva(Integer idUsuario, Reserva.EstadoReserva estadoReserva);
-    //para mostrar las reservas por id del lugar de la cancha y su estado
-    List<Reserva> findByCanchaLugarCanchaIdLugarAndEstadoReserva(Integer idLugar, Reserva.EstadoReserva estadoReserva);
+
+    // Busca reservas por usuario y estado
+    List<Reserva> findByUsuario_IdUsuarioAndEstadoReserva(Integer idUsuario, Reserva.EstadoReserva estadoReserva);
+
+    // Busca reservas por lugar y estado
+    List<Reserva> findByCancha_Lugar_IdLugarAndEstadoReserva(Integer idLugar, Reserva.EstadoReserva estadoReserva);
 }
+

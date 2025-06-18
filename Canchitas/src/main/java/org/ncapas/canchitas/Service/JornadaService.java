@@ -5,6 +5,7 @@ import org.ncapas.canchitas.DTOs.response.JornadaResponseDTO;
 
 import java.util.List;
 
+
 public interface JornadaService {
     List<JornadaResponseDTO> findAll();
     JornadaResponseDTO findById(int id);

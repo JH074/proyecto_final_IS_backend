@@ -3,6 +3,7 @@ package org.ncapas.canchitas.Controllers;
 import org.ncapas.canchitas.DTOs.request.UsuarioRequestDTO;
 import org.ncapas.canchitas.DTOs.response.UsuarioResponseDTO;
 import org.ncapas.canchitas.Service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class UsuariosController {
 
     private final UsuarioService usuarioService;
 
+    @Autowired
     public UsuariosController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }

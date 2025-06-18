@@ -9,7 +9,7 @@ public class CanchaUpdateRequestDTO {
     private String nombre;
     private String foto;
     private Integer numeroCancha;
-    private String tipoCancha;
-    private String jornada;
-    private String lugar;
+    private Integer tipoCancha;
+    private Integer jornada;
+    private Integer lugar;
 }
