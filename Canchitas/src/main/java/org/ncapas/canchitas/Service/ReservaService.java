@@ -5,6 +5,7 @@ import org.ncapas.canchitas.DTOs.response.ReservaResponseDTO;
 
 import java.util.List;
 
+
 public interface ReservaService {
     List<ReservaResponseDTO> findAll();
     ReservaResponseDTO findById(int id);

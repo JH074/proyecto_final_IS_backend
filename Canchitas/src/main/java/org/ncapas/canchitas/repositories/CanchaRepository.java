@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CanchaRepository extends JpaRepository<Cancha, Long> {
+public interface CanchaRepository extends JpaRepository<Cancha, Integer> {
     // Para buscar cancha por lugar
-    List<Cancha> findByLugar(Integer idLugar);
+    List<Cancha> findByIdCancha(Integer idLugar);
 }

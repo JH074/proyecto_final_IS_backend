@@ -9,7 +9,6 @@ import org.ncapas.canchitas.entities.EstadoDisponibilidad.Status;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EstadoDisponibilidadRequestDTO {
-
     /**
      * Estado de disponibilidad.
      * Valores válidos: DISPONIBLE, NO_DISPONIBLE
