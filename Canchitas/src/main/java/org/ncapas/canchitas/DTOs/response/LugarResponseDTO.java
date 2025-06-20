@@ -9,7 +9,7 @@ public class LugarResponseDTO {
     private Integer idLugar;
     private String nombre;
     private String direccion;
-    private Integer capacidad;
+    private Integer codigo;
     private String zona;
 
 }

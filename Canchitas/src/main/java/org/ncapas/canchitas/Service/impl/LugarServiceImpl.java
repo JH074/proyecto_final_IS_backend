@@ -43,7 +43,7 @@ public class LugarServiceImpl implements LugarService {
         Lugar nueva = Lugar.builder()
                 .nombre(dto.getNombre())
                 .direccion(dto.getDireccion())
-                .capacidad(dto.getCapacidad())
+                .codigo(dto.getCodigo())
                 .zona(zona)
                 .build();
 

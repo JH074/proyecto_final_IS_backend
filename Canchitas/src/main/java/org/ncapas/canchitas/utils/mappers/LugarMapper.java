@@ -13,7 +13,7 @@ public class LugarMapper {
                 .idLugar(entidad.getIdLugar())
                 .nombre(entidad.getNombre())
                 .direccion(entidad.getDireccion())
-                .capacidad(entidad.getCapacidad())
+                .codigo(entidad.getCodigo())
                 .zona(entidad.getZona().getDepartamento())
                 .build();
     }
