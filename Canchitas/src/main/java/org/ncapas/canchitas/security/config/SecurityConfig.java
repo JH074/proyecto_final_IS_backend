@@ -6,12 +6,14 @@ import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@EnableMethodSecurity        //  ← añade esta línea
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -25,11 +27,15 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         // autenticación y login siguen públicos
-                        .requestMatchers("/api/auth/**").permitAll()
+
+                        /* ---------- Rutas públicas ---------- */
+                        .requestMatchers("/api/auth/**").permitAll()                      // login
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()    // registro
+                        .requestMatchers(HttpMethod.GET,  "/api/lugares/zonas").permitAll() // combo de zonas ← NUEVO
 
                         // *** REGISTRO PÚBLICO ***
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-
+                        .requestMatchers(HttpMethod.POST,   "/api/lugares").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/lugares/**").hasRole("ADMIN")
                         // todo lo demás necesita token
                         .anyRequest().authenticated()
                 )

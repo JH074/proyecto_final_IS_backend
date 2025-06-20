@@ -19,8 +19,8 @@ public class LugarRequestDTO {
     private String direccion;
 
     @NotNull(message = "La capacidad es obligatoria")
-    @Min(value = 1, message = "La capacidad debe ser al menos 1")
-    private Integer capacidad;
+    @Min(value = 1, message = "El codigo debe de ser al menos 4 numeros")
+    private Integer codigo;
 
     @NotNull(message = "Debe especificar la zona (ID)")
     private Integer zona;

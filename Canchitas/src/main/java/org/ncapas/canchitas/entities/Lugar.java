@@ -26,7 +26,7 @@ public class Lugar {
     private String direccion;
 
     @Column(name = "codigo_establecimiento", nullable = false)
-    private Integer capacidad;
+    private Integer codigo;
 
     @ManyToOne
     @JoinColumn(name = "id_zona", nullable = false, foreignKey = @ForeignKey(name = "fk_zona"))
