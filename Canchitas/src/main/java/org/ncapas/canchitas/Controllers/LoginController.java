@@ -9,7 +9,9 @@ import org.ncapas.canchitas.security.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.*;
-        import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -23,18 +25,32 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO req) {
-        authManager.authenticate(
+        // 1) Autenticar
+        Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        req.getCorreo(), req.getContrasena()));
+                        req.getCorreo(), req.getContrasena()
+                )
+        );
 
+        // 2) Generar token
         String token = jwtUtil.generate(req.getCorreo());
-        return ResponseEntity.ok(new AuthResponseDTO(token));
-    }
 
+        // 3) Extraer el rol y quitar el prefijo "ROLE_"
+        String authority = auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse("CLIENTE");  // por defecto
+        String rol = authority.startsWith("ROLE_")
+                ? authority.substring("ROLE_".length())
+                : authority;
+
+        // 4) Devolver token + rol
+        return ResponseEntity.ok(new AuthResponseDTO(token, rol));
+    }
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/logout")
     public ResponseEntity<Map<String, String>> logout() {
-        // Aquí podrías, opcionalmente, añadir el token a una blacklist si lo gestionas
+
         return ResponseEntity.ok(
                 Map.of("mensaje", "La sesión ha sido cerrada")
         );
