@@ -16,6 +16,7 @@ public class CanchaMapper {
                 .imagenes(cancha.getImagenes())
                 .numeroCancha(cancha.getNumeroCancha())
                 .tipoCancha(cancha.getTipoCancha().getTipo().name())
+                .lugarId(cancha.getLugar().getIdLugar())    // <— aquí
                 .lugar(cancha.getLugar().getNombre())
                 .jornadas(JornadaMapper.toDTOList(cancha.getJornadas()))
                 .build();

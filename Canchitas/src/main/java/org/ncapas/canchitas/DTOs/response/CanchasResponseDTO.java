@@ -15,4 +15,5 @@ public class CanchasResponseDTO {
     private String tipoCancha;
     private List<JornadaResponseDTO> jornadas;
     private String lugar;
+    private int lugarId;
 }
