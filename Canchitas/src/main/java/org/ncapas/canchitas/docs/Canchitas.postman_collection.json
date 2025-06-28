@@ -1,0 +1,933 @@
+{
+	"info": {
+		"_postman_id": "2adf57ca-e76d-4a96-b34c-1907f61be6cd",
+		"name": "Canchitas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45306401",
+		"_collection_link": "https://jenni-3469096.postman.co/workspace/f447c0db-49a6-44b0-8c1b-23b99d714f5e/collection/45306401-2adf57ca-e76d-4a96-b34c-1907f61be6cd?action=share&source=collection_link&creator=45306401"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY0NzY1LCJleHAiOjE3NTEwNzkxNjV9.iG-xbin4Bh3N-0IrzPdD4mGapYh9bvWeiIDPxjCNm8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								"1"
+							]
+						},
+						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Listado usuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lugar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Sport Boom\",\r\n  \"direccion\": \"Av. Olímpica #125\",\r\n  \"codigo\": 453434343,\r\n  \"zona\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/lugares",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lugares"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lugar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/lugares/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lugares",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado zonas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/lugares/zonas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lugares",
+								"zonas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Cancha Norte\",\r\n  \"imagenes\": [\"https://recreasport.com/wp-content/uploads/2017/04/SAM_0191-2.jpg\"],\r\n  \"numeroCancha\": 9,\r\n  \"tipoCanchaId\": 1,\r\n  \"lugarId\": 2,\r\n  \"jornadas\": [\r\n    {\r\n      \"horaInicio\": \"07:00 p. m.\",\r\n      \"horaFin\":    \"10:00 p. m.\",\r\n      \"precioPorHora\": 30.0,\r\n      \"semanaId\": 1,\r\n      \"estadoDisponibilidadId\": 1\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/canchas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado canchas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canchas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Horarios por dia y cancha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canchas/7/jornadas?dia=LUNES",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas",
+								"7",
+								"jornadas"
+							],
+							"query": [
+								{
+									"key": "dia",
+									"value": "LUNES"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canchas/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar cancha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"CANCHA ACTUALIZADA\",\r\n  \"imagenes\": [\"url9\"],\r\n  \"numeroCancha\": 20,\r\n  \"tipoCanchaId\": 2,\r\n  \"lugarId\": 1,\r\n  \"jornadas\": [\r\n    {\r\n      \"horaInicio\": \"05:00 a. m.\",\r\n      \"horaFin\":    \"10:00 a. m.\",\r\n      \"precioPorHora\": 20.0,\r\n      \"semanaId\": 2,\r\n      \"estadoDisponibilidadId\": 1\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/canchas/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado lugares",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/lugares",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lugares"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado lugares por zona",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/zonas/2/lugares",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"zonas",
+								"2",
+								"lugares"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancha por lugar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/lugares/3/canchas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lugares",
+								"3",
+								"canchas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado tipos de canchas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUwNjM1MTU1LCJleHAiOjE3NTA2NDk1NTV9.eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canchas/tipos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado reservas por usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY4NTIxLCJleHAiOjE3NTEwODI5MjF9.WYdowXdW1AKM4X2o-VrtxJy4ZdwW7zp8JDaXI4n9NRY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reservas/usuario/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservas",
+								"usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado reservas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY4NTIxLCJleHAiOjE3NTEwODI5MjF9.WYdowXdW1AKM4X2o-VrtxJy4ZdwW7zp8JDaXI4n9NRY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaReserva\": \"2025-06-29\",\r\n    \"horaEntrada\": \"10:00 a. m.\",\r\n    \"horaSalida\": \"11:00 a. m.\",\r\n    \"usuarioId\": 8,\r\n    \"lugarId\": 2,\r\n    \"metodoPagoId\": 1,\r\n    \"canchaId\": 2\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reservas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado reservas por cancha",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY4NTIxLCJleHAiOjE3NTEwODI5MjF9.WYdowXdW1AKM4X2o-VrtxJy4ZdwW7zp8JDaXI4n9NRY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canchas/2/reservas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canchas",
+								"2",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Reservas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY4NTIxLCJleHAiOjE3NTEwODI5MjF9.WYdowXdW1AKM4X2o-VrtxJy4ZdwW7zp8JDaXI4n9NRY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaReserva\": \"2025-06-29\",\r\n    \"horaEntrada\": \"10:00 a. m.\",\r\n    \"horaSalida\": \"11:00 a. m.\",\r\n    \"usuarioId\": 8,\r\n    \"lugarId\": 2,\r\n    \"metodoPagoId\": 1,\r\n    \"canchaId\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reservas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reserva",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY1MjM4LCJleHAiOjE3NTEwNzk2Mzh9.jfp6Fx3TYar_sWUM4J-V54CsqRUXlW6W8FC-Ijjo1mI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaReserva\": \"2025-06-29\",\r\n    \"horaEntrada\": \"10:00 a. m.\",\r\n    \"horaSalida\": \"11:00 a. m.\",\r\n    \"usuarioId\": 8,\r\n    \"lugarId\": 2,\r\n    \"metodoPagoId\": 1,\r\n    \"canchaId\": 2\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reservas/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservas",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado reserva por usuario y estado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWxvQGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxMDY4NTIxLCJleHAiOjE3NTEwODI5MjF9.WYdowXdW1AKM4X2o-VrtxJy4ZdwW7zp8JDaXI4n9NRY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reservas/usuario/8?estado=PENDIENTE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservas",
+								"usuario",
+								"8"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "FINALIZADA",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "PENDIENTE"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Registro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Paloma\",\n  \"apellido\": \"Franco\",\n  \"correo\": \"palo@example.com\",\n  \"contrasena\": \"p4l0franc0\",\n  \"rolId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"correo\": \"palo@example.com\",\n    \"contrasena\": \"p4l0franc0\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"correo\": \"jenn@gmail.com\",\n    \"contrasena\": \"jenn12345\"\n\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
