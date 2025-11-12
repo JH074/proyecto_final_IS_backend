@@ -64,7 +64,7 @@ src/main/java/org/ncapas/canchitas/
 1. Clonar el repositorio 
 
 ```bash
-  git clone https://github.com/PNC-012025/pnc-proyecto-final-grupo-01-s02.git
+  git clone https://github.com/JH074/proyecto_final_IS_backend.git
 ```
 
 2. Configurar la base de datos en application.yml:
@@ -126,14 +126,3 @@ Para acceder a la colección de Postman:
     docs/Canchitas.postman-collection.json
 ```
 
-## FrontEnd
-
-[Repositorio de FrontEnd](https://github.com/PNC-012025/pnc-proyecto-final-frontend-ft-grupo-01-s02)
-
-## Autores
-
-- [Jennifer Hernández](https://github.com/JH074)
-- [Alexandra Aguilar](https://github.com/AlexandraAguilar1587)
-- [Carlos Domínguez](https://github.com/Carlosaleja)
-- [Diego Domínguez](https://github.com/DiegoDomin)
-- [Anthony Canales](https://github.com/aacmyk22)
