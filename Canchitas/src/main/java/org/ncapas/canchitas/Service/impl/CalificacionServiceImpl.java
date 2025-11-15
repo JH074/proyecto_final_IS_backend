@@ -20,15 +20,15 @@ import org.ncapas.canchitas.exception.CalificacionExist;
 public class CalificacionServiceImpl implements CalificacionService {
 
     private final CalificacionRepository repo;
-    private final UsuarioRepository usuarioRepo;
+    private final UsuarioRepostitory usuarioRepo;
     private final CanchaRepository canchaRepo;
     private final CalificacionMapper mapper;
 
     @Override
-    public CalificacionResponse crearCalificacion(CalificacionRequest request) {
+    public CalificacionResponseDTO crearCalificacion(CalificacionRequestDTO request) {
 
-        if (repo.existsByUsuario_IdAndCancha_Id(request.getIdUsuario(), request.getIdCancha())) {
-            throw new CalificacionYaExisteException();
+        if (repo.existsByUsuario_IdUsuarioAndCancha_IdCancha(request.getIdUsuario(), request.getIdCancha())) {
+            throw new CalificacionExist();
         }
 
         Usuario usuario = usuarioRepo.findById(request.getIdUsuario())

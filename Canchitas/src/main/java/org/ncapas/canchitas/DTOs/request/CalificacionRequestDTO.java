@@ -3,7 +3,7 @@ package org.ncapas.canchitas.DTOs.request;
 import lombok.Data;
 
 @Data
-public class CalificacionRequest {
+public class CalificacionRequestDTO {
     private Integer idUsuario;
     private Integer idCancha;
     private Integer puntaje;

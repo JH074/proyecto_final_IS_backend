@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface CalificacionRepository extends JpaRepository<Calificacion, Integer> {
 
-    boolean existsByUsuario_IdAndCancha_Id(Integer idUsuario, Integer idCancha);
+    boolean existsByUsuario_IdUsuarioAndCancha_IdCancha(Integer idUsuario, Integer idCancha);
 
     @Query("SELECT AVG(c.puntaje) FROM Calificacion c WHERE c.cancha.id = :idCancha")
     Double obtenerPromedioPorCancha(Integer idCancha);

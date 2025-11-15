@@ -1,4 +1,4 @@
-package org.ncapas.canchitas.exceptions;
+package org.ncapas.canchitas.exception;
 
 public class CalificacionExist extends RuntimeException {
     public CalificacionExist() {

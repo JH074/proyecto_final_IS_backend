@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CalificacionResponse {
+public class CalificacionResponseDTO {
     private Integer idCalificacion;
     private Integer puntaje;
     private String usuarioNombre;

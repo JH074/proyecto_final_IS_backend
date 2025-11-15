@@ -7,8 +7,8 @@ import org.ncapas.canchitas.DTOs.response.CalificacionResponseDTO;
 @Component
 public class CalificacionMapper {
 
-    public CalificacionResponse toResponse(Calificacion cal) {
-        return CalificacionResponse.builder()
+    public CalificacionResponseDTO toResponse(Calificacion cal) {
+        return CalificacionResponseDTO.builder()
                 .idCalificacion(cal.getIdCalificacion())
                 .puntaje(cal.getPuntaje())
                 .usuarioNombre(cal.getUsuario().getNombre())

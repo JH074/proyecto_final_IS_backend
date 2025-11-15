@@ -15,7 +15,7 @@ public class CalificacionController {
     private final CalificacionService service;
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody CalificacionRequest request) {
+    public ResponseEntity<?> crear(@RequestBody CalificacionRequestDTO request) {
         return ResponseEntity.ok(service.crearCalificacion(request));
     }
 
