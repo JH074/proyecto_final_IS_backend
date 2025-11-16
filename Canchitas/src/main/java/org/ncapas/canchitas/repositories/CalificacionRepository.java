@@ -12,4 +12,6 @@ public interface CalificacionRepository extends JpaRepository<Calificacion, Inte
 
     @Query("SELECT AVG(c.puntaje) FROM Calificacion c WHERE c.cancha.id = :idCancha")
     Double obtenerPromedioPorCancha(Integer idCancha);
+
+    Long countByCancha_IdCancha(Integer idCancha);
 }

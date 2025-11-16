@@ -23,4 +23,10 @@ public class CalificacionController {
     public ResponseEntity<?> obtenerPromedio(@PathVariable Integer idCancha) {
         return ResponseEntity.ok(service.obtenerPromedioDeCancha(idCancha));
     }
+
+    @GetMapping("/total/{idCancha}")
+    public ResponseEntity<Long> obtenerTotalCalificaciones(@PathVariable Integer idCancha) {
+        Long total = service.obtenerTotalCalificacionesPorCancha(idCancha);
+        return ResponseEntity.ok(total);
+    }
 }
