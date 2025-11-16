@@ -6,4 +6,5 @@ import org.ncapas.canchitas.DTOs.response.CalificacionResponseDTO;
 public interface CalificacionService {
     CalificacionResponseDTO crearCalificacion(CalificacionRequestDTO request);
     Double obtenerPromedioDeCancha(Integer idCancha);
+    Long obtenerTotalCalificacionesPorCancha(Integer idCancha);
 }

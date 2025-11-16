@@ -59,4 +59,14 @@ public class CalificacionServiceImpl implements CalificacionService {
 
         return promedio != null ? promedio : 0.0;
     }
+
+    @Override
+    public Long obtenerTotalCalificacionesPorCancha(Integer idCancha) {
+
+        // validar que la cancha exista
+        canchaRepo.findById(idCancha)
+                .orElseThrow(() -> new RuntimeException("La cancha no existe"));
+
+        return repo.countByCancha_IdCancha(idCancha);
+    }
 }
