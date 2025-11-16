@@ -21,6 +21,7 @@ public class SolicitudPropietarioResponseDTO {
     private String direccionLugar;
     private String nit;
     private String telefonoLugar;
+    private String zona;
 
     private Date fechaSolicitud;
     private String estadoSolicitud;

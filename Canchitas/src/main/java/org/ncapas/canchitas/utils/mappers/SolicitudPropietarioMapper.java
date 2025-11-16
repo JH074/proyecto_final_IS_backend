@@ -4,7 +4,7 @@ import org.ncapas.canchitas.DTOs.request.SolicitudPropietarioRequestDTO;
 import org.ncapas.canchitas.DTOs.response.SolicitudPropietarioResponseDTO;
 import org.ncapas.canchitas.entities.SolicitudPropietario;
 import org.springframework.stereotype.Component;
-import org.ncapas.canchitas.entities.Usuario;
+import org.ncapas.canchitas.entities.*;
 
 
 import java.util.Date;
@@ -43,6 +43,7 @@ public class SolicitudPropietarioMapper {
                 .direccionLugar(s.getDireccionLugar())
                 .nit(s.getNit())
                 .telefonoLugar(s.getTelefonoLugar())
+                .zona(s.getZona().getDepartamento())
                 .fechaSolicitud(s.getFechaSolicitud())
                 .estadoSolicitud(s.getEstadoSolicitud().name())
                 .idUsuario(s.getUsuario().getIdUsuario())
