@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Data
@@ -45,7 +46,6 @@ public class SolicitudPropietario {
 
     // Información del lugar
     @NotBlank
-    @Size(max = 120)
     @Column(name = "nombre_lugar", nullable = false)
     private String nombreLugar;
 
