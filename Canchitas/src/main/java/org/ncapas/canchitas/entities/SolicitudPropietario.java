@@ -91,5 +91,10 @@ public class SolicitudPropietario {
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_zona", nullable = false)
+    private Zona zona;
+
 }
 
