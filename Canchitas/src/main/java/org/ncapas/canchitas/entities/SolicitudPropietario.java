@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.*;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Builder
