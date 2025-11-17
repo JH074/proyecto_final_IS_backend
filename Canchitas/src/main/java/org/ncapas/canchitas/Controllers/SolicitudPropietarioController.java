@@ -39,4 +39,13 @@ public class SolicitudPropietarioController {
         return ResponseEntity.ok(solicitudService.listarSolicitudes());
     }
 
+    /* ---------------------------------------------------------
+     * 3) Aprobar solicitud (ADMIN → convierte usuario en PROPIETARIO)
+     * --------------------------------------------------------- */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/aprobar")
+    public ResponseEntity<String> aprobarSolicitud(@PathVariable Integer id) {
+        solicitudService.aprobarSolicitud(id);
+        return ResponseEntity.ok("Solicitud aprobada. El usuario ahora es PROPIETARIO");
+    }
 }

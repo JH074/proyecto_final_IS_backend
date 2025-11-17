@@ -6,7 +6,6 @@ import org.ncapas.canchitas.DTOs.request.LugarRequestDTO;
 import org.ncapas.canchitas.DTOs.response.LugarResponseDTO;
 import org.ncapas.canchitas.DTOs.response.ZonaComboDTO;
 import org.ncapas.canchitas.Service.LugarService;
-import org.ncapas.canchitas.entities.Zona;
 import org.ncapas.canchitas.repositories.ZonaRepository;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,8 +27,10 @@ public class LugarController {
     @GetMapping("/zonas")
     public List<ZonaComboDTO> listarZonas() {
         return zonaRepo.findAll().stream()
-                .map(z -> new ZonaComboDTO(z.getIdZona(),
-                        z.getDepartamento() + " – " + z.getDistrito()))
+                .map(z -> new ZonaComboDTO(
+                        z.getIdZona(),
+                        z.getDepartamento() + " – " + z.getDistrito()
+                ))
                 .toList();
     }
 
@@ -47,8 +48,8 @@ public class LugarController {
         return ResponseEntity.ok(lugarService.findById(id));
     }
 
-    /** Crear lugar – SOLO rol ADMIN */
-    @PreAuthorize("hasRole('ADMIN')")
+    /** Crear lugar – ADMIN o PROPIETARIO */
+    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
     @PostMapping
     public ResponseEntity<LugarResponseDTO> crearLugar(
             @Valid @RequestBody LugarRequestDTO dto) {

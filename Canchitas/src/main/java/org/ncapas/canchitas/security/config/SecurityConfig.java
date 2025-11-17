@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ncapas.canchitas.security.JwtFilter;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableMethodSecurity        //  ← añade esta línea
+@EnableMethodSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -28,45 +28,62 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // autenticación y login siguen públicos
 
                         /* ---------- Rutas públicas ---------- */
-                        .requestMatchers("/api/auth/**").permitAll()                      // login
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()    // registro
-                        .requestMatchers(HttpMethod.GET,  "/api/lugares/zonas").permitAll() // combo de zonas ← NUEVO
-                        .requestMatchers(HttpMethod.GET, "/api/canchas/tipos").permitAll() // Obtemer canchas
-                        .requestMatchers(HttpMethod.GET, "/api/canchas/{id}").permitAll() // Obtemer canchas
+                        .requestMatchers("/api/auth/**").permitAll()                         // login
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()       // registro
+                        .requestMatchers(HttpMethod.GET, "/api/lugares/zonas").permitAll()   // combo de zonas
+                        .requestMatchers(HttpMethod.GET, "/api/canchas/tipos").permitAll()   // tipos de cancha
+                        .requestMatchers(HttpMethod.GET, "/api/canchas/{id}").permitAll()    // detalle cancha pública
 
+                        /* ---------- ADMIN / CLIENTE / PROPIETARIO ---------- */
+                        // zonas → lugares
+                        .requestMatchers(HttpMethod.GET, "/api/zonas/*/lugares")
+                        .hasAnyRole("ADMIN", "CLIENTE", "PROPIETARIO")
 
-                        /* ---------- ADMINISTRADOR Y USUARIO---------- */
-                        // 1) zonas  →  lugares
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/zonas/*/lugares"        // p.e. /api/zonas/3/lugares
-                        ).hasAnyRole("ADMIN", "CLIENTE")
+                        // lugares → canchas
+                        .requestMatchers(HttpMethod.GET, "/api/lugares/*/canchas")
+                        .hasAnyRole("ADMIN", "CLIENTE", "PROPIETARIO")
 
-                        // 2) lugares →  canchas
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/lugares/*/canchas"      // p.e. /api/lugares/7/canchas
-                        ).hasAnyRole("ADMIN", "CLIENTE")
-                        .requestMatchers(HttpMethod.POST, "/api/reservas").hasRole("CLIENTE")
-                        .requestMatchers(HttpMethod.GET, "/api/reservas/usuario/{id}").hasAnyRole("ADMIN","CLIENTE")
-                        .requestMatchers(HttpMethod.DELETE, "/api/reservas/{id}").hasAnyRole("ADMIN","CLIENTE")
+                        // reservas
+                        .requestMatchers(HttpMethod.POST, "/api/reservas")
+                        .hasRole("CLIENTE")   // crear reserva = cliente
+                        .requestMatchers(HttpMethod.GET, "/api/reservas/usuario/{id}")
+                        .hasAnyRole("ADMIN", "CLIENTE", "PROPIETARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/api/reservas/{id}")
+                        .hasAnyRole("ADMIN", "CLIENTE", "PROPIETARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/api/reservas")
+                        .hasRole("ADMIN")     // si tienes algún delete masivo
 
-                        // *** rol admin ***
-                        .requestMatchers(HttpMethod.POST,   "/api/lugares").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/lugares/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,   "/api/canchas").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/canchas/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/reservas").hasRole("ADMIN")
-                        // todo lo demás necesita token
+                        /* ---------- LUGARES / CANCHAS ---------- */
+                        // Crear lugar: ADMIN o PROPIETARIO
+                        .requestMatchers(HttpMethod.POST, "/api/lugares")
+                        .hasAnyRole("ADMIN", "PROPIETARIO")
+                        // Eliminar lugar: solo ADMIN
+                        .requestMatchers(HttpMethod.DELETE, "/api/lugares/**")
+                        .hasRole("ADMIN")
+
+                        // Crear cancha: ADMIN o PROPIETARIO
+                        .requestMatchers(HttpMethod.POST, "/api/canchas")
+                        .hasAnyRole("ADMIN", "PROPIETARIO")
+                        // Eliminar cancha: solo ADMIN
+                        .requestMatchers(HttpMethod.DELETE, "/api/canchas/**")
+                        .hasRole("ADMIN")
+
+                        /* ---------- Lo demás: autenticado ---------- */
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-    @Bean public BCryptPasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
-    @Bean public AuthenticationManager authenticationManager(AuthenticationConfiguration cfg) throws Exception {
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration cfg) throws Exception {
         return cfg.getAuthenticationManager();
     }
 }

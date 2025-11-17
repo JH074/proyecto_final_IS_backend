@@ -25,21 +25,22 @@ public class CanchaController {
 
     private final CanchasService       canchasService;
     private final TipoCanchaRepository tipoRepo;
-    private final ReservaService reservaService;  // inyectar
+    private final ReservaService       reservaService;
+
     /* ------------------------------------------------------------------
      * 1) Combo de tipos de cancha (público) ─ GET /api/canchas/tipos
      * ------------------------------------------------------------------ */
     @GetMapping("/tipos")
     public List<TipoCanchaComboDTO> listarTipos() {
         return tipoRepo.findAll().stream()
-                .map(this::mapTipo)         // método auxiliar abajo
+                .map(this::mapTipo)
                 .toList();
     }
 
     /* ------------------------------------------------------------------
-     * 2) Crear cancha (ADMIN) ─ POST /api/canchas
+     * 2) Crear cancha (ADMIN o PROPIETARIO) ─ POST /api/canchas
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CanchasResponseDTO> crearCancha(
             @Valid @RequestBody CanchaRequestDTO dto) {
@@ -72,15 +73,15 @@ public class CanchaController {
     }
 
     /* ------------------------------------------------------------------
-     * 5) Actualizar (ADMIN) ─ PUT /api/canchas/{id}
+     * 5) Actualizar (ADMIN o PROPIETARIO) ─ PUT /api/canchas/{id}
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasRole('CLIENTE') or hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> actualizar(
             @PathVariable int id,
             @Valid @RequestBody CanchaUpdateRequestDTO dto) {
 
-        dto.setIdCancha(id);                       // coherencia path/body
+        dto.setIdCancha(id);
         CanchasResponseDTO updated = canchasService.update(dto);
 
         Map<String, Object> body = Map.of(
@@ -88,30 +89,29 @@ public class CanchaController {
                         + "\" (id=" + updated.getIdCancha() + ") ha sido actualizada",
                 "cancha",  updated
         );
-        return ResponseEntity.ok(body);            // 200 OK con mensaje + DTO
+        return ResponseEntity.ok(body);
     }
 
     /* ------------------------------------------------------------------
-     * 6) Eliminar (ADMIN) ─ DELETE /api/canchas/{id}
+     * 6) Eliminar (SOLO ADMIN) ─ DELETE /api/canchas/{id}
      * ------------------------------------------------------------------ */
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable int id) {
 
-        // 1) Traer la cancha (para obtener el nombre) y luego borrarla
         CanchasResponseDTO cancha = canchasService.findById(id);   // puede lanzar 404
         canchasService.delete(id);
 
-        // 2) Armar el mensaje
         String msg = "La cancha \"" + cancha.getNombre()
                 + "\" (id=" + cancha.getIdCancha() + ") ha sido eliminada";
 
         Map<String, String> body = Map.of("mensaje", msg);
-        return ResponseEntity.ok(body);           // 200 OK con JSON
+        return ResponseEntity.ok(body);
     }
 
     /* ------------------------------------------------------------------
-     * 6) Traer horarios por cancha (ADMIN) ─ DELETE /api/canchas/{id}
+     * 7) Traer horarios por cancha ─ GET /api/canchas/{id}/jornadas
+     *     (lo dejamos abierto a cualquier autenticado, si así lo quieres)
      * ------------------------------------------------------------------ */
     @GetMapping("/{id}/jornadas")
     public ResponseEntity<List<JornadaResponseDTO>> jornadasPorDia(
@@ -119,20 +119,21 @@ public class CanchaController {
             @RequestParam String dia) {
 
         Semana.Dia diaEnum;
-        try { diaEnum = Semana.Dia.from(dia); }
-        catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().build();       // 400 si valor inválido
+        try {
+            diaEnum = Semana.Dia.from(dia);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().build();
         }
 
         var lista = canchasService.findJornadasByCanchaAndDia(id, diaEnum);
         return ResponseEntity.ok(lista);
     }
 
-
     /* ------------------------------------------------------------------
-     * 7) OBTENER RESERVAS POR CANCHA (ADMIN) ─ GET /api/canchas/{id}/reservas
+     * 8) OBTENER RESERVAS POR CANCHA (ADMIN o PROPIETARIO)
+     *     ─ GET /api/canchas/{id}/reservas
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
     @GetMapping("/{id}/reservas")
     public ResponseEntity<List<ReservaResponseDTO>> reservasPorCancha(
             @PathVariable int id) {
@@ -143,13 +144,15 @@ public class CanchaController {
         List<ReservaResponseDTO> lista = reservaService.findByCanchaId(id);
         return ResponseEntity.ok(lista);
     }
+
     /* ------------------------------------------------------------------
      * AUXILIAR: convertir TipoCancha a combo DTO
      * ------------------------------------------------------------------ */
     private TipoCanchaComboDTO mapTipo(TipoCancha t) {
         return new TipoCanchaComboDTO(
                 t.getIdTipoCancha(),
-                t.getTipo().name()   // usa .toValue() si tu enum lo expone
+                t.getTipo().name()
         );
     }
 }
+
