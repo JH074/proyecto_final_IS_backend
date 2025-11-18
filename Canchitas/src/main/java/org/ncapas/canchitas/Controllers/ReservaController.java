@@ -26,9 +26,9 @@ public class ReservaController {
     private final ReservaService reservaService;
 
     /* ───────────────────────────────
-       1) Listar reservas (ADMIN)
+       1) Listar reservas (ADMIN o PROPIETARIO)
     ─────────────────────────────── */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
     @GetMapping
     public List<ReservaResponseDTO> listar(
             @RequestParam(name="fechaReserva", required=false)
@@ -52,7 +52,7 @@ public class ReservaController {
     }
 
     /* ───────────────────────────────
-       3) Crear reserva (ROLE_USER)
+       3) Crear reserva (CLIENTE)
     ─────────────────────────────── */
     @PreAuthorize("hasRole('CLIENTE')")
     @PostMapping
@@ -71,9 +71,9 @@ public class ReservaController {
     }
 
     /* ───────────────────────────────
-       4) Eliminar reserva (ADMIN)
+       4) Eliminar reserva (CLIENTE, ADMIN o PROPIETARIO)
     ─────────────────────────────── */
-    @PreAuthorize("hasRole('CLIENTE') or hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('CLIENTE','ADMIN','PROPIETARIO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable int id) {
 
@@ -85,15 +85,15 @@ public class ReservaController {
                 + r.getNombreUsuario() + " para la cancha "
                 + r.getNombreCancha() + " ha sido eliminada";
 
-        return ResponseEntity.ok( Map.of("mensaje", msg) );
+        return ResponseEntity.ok(Map.of("mensaje", msg));
     }
 
 
     /* ───────────────────────────────
-       4) Listar reservas de un usuario, OPCIONALMENTE filtradas por estado
-         GET /api/reservas/usuario/{usuarioId}?estado=PENDIENTE
+       5) Listar reservas de un usuario, opcionalmente filtradas por estado
+          GET /api/reservas/usuario/{usuarioId}?estado=PENDIENTE
     ─────────────────────────────── */
-    @PreAuthorize("hasRole('CLIENTE') or hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('CLIENTE','ADMIN','PROPIETARIO')")
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<ReservaResponseDTO>> reservasPorUsuario(
             @PathVariable Integer usuarioId,

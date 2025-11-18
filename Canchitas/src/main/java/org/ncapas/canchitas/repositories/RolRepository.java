@@ -8,6 +8,10 @@ import java.util.Optional;
 
 @Repository
 public interface RolRepository extends JpaRepository<Rol, Integer> {
+
+
     Optional<Rol> findByNombreIgnoreCase(String nombre);
 
+    Optional<Rol> findByNombre(String nombre);
 }
+
