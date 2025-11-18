@@ -56,19 +56,23 @@ public class SecurityConfig {
                         .hasRole("ADMIN")     // si tienes algún delete masivo
 
                         /* ---------- LUGARES / CANCHAS ---------- */
-                        // Crear lugar: ADMIN o PROPIETARIO
-                        .requestMatchers(HttpMethod.POST, "/api/lugares")
-                        .hasAnyRole("ADMIN", "PROPIETARIO")
-                        // Eliminar lugar: solo ADMIN
-                        .requestMatchers(HttpMethod.DELETE, "/api/lugares/**")
-                        .hasRole("ADMIN")
+                        // ADMIN ya no puede crear ni eliminar lugares/canchas
+                        .requestMatchers(HttpMethod.GET, "/api/lugares/**").hasAnyRole("ADMIN", "PROPIETARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/canchas/**").hasAnyRole("ADMIN", "PROPIETARIO")
 
-                        // Crear cancha: ADMIN o PROPIETARIO
+                        // Crear lugar: solo PROPIETARIO
+                        .requestMatchers(HttpMethod.POST, "/api/lugares")
+                        .hasRole("PROPIETARIO")
+                        // Eliminar lugar: solo PROPIETARIO
+                        .requestMatchers(HttpMethod.DELETE, "/api/lugares/**")
+                        .hasRole("PROPIETARIO")
+
+                        // Crear cancha: solo PROPIETARIO
                         .requestMatchers(HttpMethod.POST, "/api/canchas")
-                        .hasAnyRole("ADMIN", "PROPIETARIO")
-                        // Eliminar cancha: solo ADMIN
+                        .hasRole("PROPIETARIO")
+                        // Eliminar cancha: solo PROPIETARIO
                         .requestMatchers(HttpMethod.DELETE, "/api/canchas/**")
-                        .hasRole("ADMIN")
+                        .hasRole("PROPIETARIO")
 
                         /* ---------- Lo demás: autenticado ---------- */
                         .anyRequest().authenticated()
@@ -87,3 +91,4 @@ public class SecurityConfig {
         return cfg.getAuthenticationManager();
     }
 }
+

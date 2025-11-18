@@ -23,9 +23,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CanchaController {
 
-    private final CanchasService       canchasService;
+    private final CanchasService canchasService;
     private final TipoCanchaRepository tipoRepo;
-    private final ReservaService       reservaService;
+    private final ReservaService reservaService;
 
     /* ------------------------------------------------------------------
      * 1) Combo de tipos de cancha (público) ─ GET /api/canchas/tipos
@@ -38,9 +38,9 @@ public class CanchaController {
     }
 
     /* ------------------------------------------------------------------
-     * 2) Crear cancha (ADMIN o PROPIETARIO) ─ POST /api/canchas
+     * 2) Crear cancha (solo PROPIETARIO) ─ POST /api/canchas
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
+    @PreAuthorize("hasRole('PROPIETARIO')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CanchasResponseDTO> crearCancha(
             @Valid @RequestBody CanchaRequestDTO dto) {
@@ -73,9 +73,9 @@ public class CanchaController {
     }
 
     /* ------------------------------------------------------------------
-     * 5) Actualizar (ADMIN o PROPIETARIO) ─ PUT /api/canchas/{id}
+     * 5) Actualizar (solo PROPIETARIO) ─ PUT /api/canchas/{id}
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
+    @PreAuthorize("hasRole('PROPIETARIO')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> actualizar(
             @PathVariable int id,
@@ -87,19 +87,19 @@ public class CanchaController {
         Map<String, Object> body = Map.of(
                 "mensaje", "La cancha \"" + updated.getNombre()
                         + "\" (id=" + updated.getIdCancha() + ") ha sido actualizada",
-                "cancha",  updated
+                "cancha", updated
         );
         return ResponseEntity.ok(body);
     }
 
     /* ------------------------------------------------------------------
-     * 6) Eliminar (SOLO ADMIN) ─ DELETE /api/canchas/{id}
+     * 6) Eliminar (solo PROPIETARIO) ─ DELETE /api/canchas/{id}
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('PROPIETARIO')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable int id) {
 
-        CanchasResponseDTO cancha = canchasService.findById(id);   // puede lanzar 404
+        CanchasResponseDTO cancha = canchasService.findById(id);
         canchasService.delete(id);
 
         String msg = "La cancha \"" + cancha.getNombre()
@@ -111,7 +111,6 @@ public class CanchaController {
 
     /* ------------------------------------------------------------------
      * 7) Traer horarios por cancha ─ GET /api/canchas/{id}/jornadas
-     *     (lo dejamos abierto a cualquier autenticado, si así lo quieres)
      * ------------------------------------------------------------------ */
     @GetMapping("/{id}/jornadas")
     public ResponseEntity<List<JornadaResponseDTO>> jornadasPorDia(
@@ -131,7 +130,6 @@ public class CanchaController {
 
     /* ------------------------------------------------------------------
      * 8) OBTENER RESERVAS POR CANCHA (ADMIN o PROPIETARIO)
-     *     ─ GET /api/canchas/{id}/reservas
      * ------------------------------------------------------------------ */
     @PreAuthorize("hasAnyRole('ADMIN','PROPIETARIO')")
     @GetMapping("/{id}/reservas")
@@ -155,4 +153,5 @@ public class CanchaController {
         );
     }
 }
+
 

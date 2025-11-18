@@ -58,7 +58,6 @@ public class SolicitudPropietarioServiceImpl implements SolicitudPropietarioServ
 
         // 1) Buscar la solicitud
         SolicitudPropietario solicitud = solicitudRepository.findById(idSolicitud)
-                // 👇 aquí estaba el problema: pasamos ahora el id (Integer), no un String
                 .orElseThrow(() -> new SolicitudNotFoundException(idSolicitud));
 
         // 2) Obtener el usuario que hizo la solicitud
