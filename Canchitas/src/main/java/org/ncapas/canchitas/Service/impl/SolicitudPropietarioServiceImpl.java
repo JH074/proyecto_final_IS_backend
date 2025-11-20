@@ -53,6 +53,17 @@ public class SolicitudPropietarioServiceImpl implements SolicitudPropietarioServ
                 .toList();
     }
 
+
+    @Override
+    public SolicitudPropietarioResponseDTO obtenerPorId(Integer idSolicitud) {
+        SolicitudPropietario solicitud = solicitudRepository.findById(idSolicitud)
+                .orElseThrow(() -> new SolicitudNotFoundException(idSolicitud));
+        return SolicitudPropietarioMapper.toDTO(solicitud);
+    }
+
+
+
+
     @Override
     public void aprobarSolicitud(Integer idSolicitud) {
 
