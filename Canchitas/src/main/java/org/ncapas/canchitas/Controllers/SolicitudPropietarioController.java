@@ -57,4 +57,11 @@ public class SolicitudPropietarioController {
         return ResponseEntity.ok(dto);
     }
 
+    /* Rechazar solicitud (ADMIN) */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/rechazar")
+    public ResponseEntity<String> rechazarSolicitud(@PathVariable Integer id) {
+        solicitudService.rechazarSolicitud(id);
+        return ResponseEntity.ok("Solicitud rechazada correctamente");
+    }
 }
