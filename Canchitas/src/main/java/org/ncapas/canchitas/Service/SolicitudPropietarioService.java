@@ -11,6 +11,9 @@ public interface SolicitudPropietarioService {
 
     List<SolicitudPropietarioResponseDTO> listarSolicitudes();
 
+    SolicitudPropietarioResponseDTO obtenerPorId(Integer idSolicitud);
+
+    void rechazarSolicitud(Integer idSolicitud);
     // Nuevo: usado por el controller para convertir a PROPIETARIO
     void aprobarSolicitud(Integer idSolicitud);
 }

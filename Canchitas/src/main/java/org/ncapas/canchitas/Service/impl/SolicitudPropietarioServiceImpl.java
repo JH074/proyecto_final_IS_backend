@@ -53,6 +53,30 @@ public class SolicitudPropietarioServiceImpl implements SolicitudPropietarioServ
                 .toList();
     }
 
+
+    @Override
+    public SolicitudPropietarioResponseDTO obtenerPorId(Integer idSolicitud) {
+        SolicitudPropietario solicitud = solicitudRepository.findById(idSolicitud)
+                .orElseThrow(() -> new SolicitudNotFoundException(idSolicitud));
+        return SolicitudPropietarioMapper.toDTO(solicitud);
+    }
+
+
+    @Override
+    public void rechazarSolicitud(Integer idSolicitud) {
+
+        // 1) Buscar la solicitud
+        SolicitudPropietario solicitud = solicitudRepository.findById(idSolicitud)
+                .orElseThrow(() -> new SolicitudNotFoundException(idSolicitud));
+
+        // 2) Cambiar estado a RECHAZADA
+        solicitud.setEstadoSolicitud(SolicitudPropietario.EstadoSolicitud.RECHAZADA);
+
+        // 3) Guardar cambios
+        solicitudRepository.save(solicitud);
+    }
+
+
     @Override
     public void aprobarSolicitud(Integer idSolicitud) {
 
@@ -73,6 +97,7 @@ public class SolicitudPropietarioServiceImpl implements SolicitudPropietarioServ
         // 4) Asignar el rol PROPIETARIO al usuario
         usuario.setRol(rolPropietario);
         usuarioRepository.save(usuario);
+
 
         // 5) Opcional: marcar la solicitud como aprobada si tienes un campo estado
         // solicitud.setEstado("APROBADA");

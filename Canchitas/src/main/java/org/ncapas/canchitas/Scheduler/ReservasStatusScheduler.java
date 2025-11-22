@@ -20,7 +20,6 @@ public class ReservasStatusScheduler {
 
     /**
      * Cada minuto (cron: "segundos minutos horas días...").
-     * Ajusta si lo quieres cada 5 min, etc.
      */
     @Scheduled(cron = "0 * * * * *")
     @Transactional
