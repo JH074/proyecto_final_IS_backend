@@ -59,6 +59,9 @@ public class SecurityConfig {
                         // ADMIN ya no puede crear ni eliminar lugares/canchas
                         .requestMatchers(HttpMethod.GET, "/api/lugares/**").hasAnyRole("ADMIN", "PROPIETARIO")
                         .requestMatchers(HttpMethod.GET, "/api/canchas/**").hasAnyRole("ADMIN", "PROPIETARIO")
+                        // 🔔 endpoint para la notificación: lo puede usar CLIENTE/PROPIETARIO/ADMIN
+                        .requestMatchers(HttpMethod.GET, "/api/solicitudes/estado-usuario/**")
+                        .hasAnyRole("CLIENTE", "PROPIETARIO", "ADMIN")
 
                         // Crear lugar: solo PROPIETARIO
                         .requestMatchers(HttpMethod.POST, "/api/lugares")
