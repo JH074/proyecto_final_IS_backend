@@ -31,5 +31,12 @@ public class Lugar {
     @ManyToOne
     @JoinColumn(name = "id_zona", nullable = false, foreignKey = @ForeignKey(name = "fk_zona"))
     private Zona zona;
-
+    // 👇 NUEVO: propietario del lugar
+    @ManyToOne
+    @JoinColumn(
+            name = "id_propietario",
+            nullable = true, // ponlo true para no romper datos viejos
+            foreignKey = @ForeignKey(name = "fk_lugar_propietario")
+    )
+    private Usuario propietario;
 }

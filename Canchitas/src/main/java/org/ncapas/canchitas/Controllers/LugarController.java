@@ -65,5 +65,12 @@ public class LugarController {
         lugarService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    /** 🔹 Mis lugares – SOLO PROPIETARIO o ADMIN (si quieres) */
+    @PreAuthorize("hasAnyRole('PROPIETARIO','ADMIN')")
+    @GetMapping("/mis-lugares/{idPropietario}")
+    public List<LugarResponseDTO> listarMisLugares(@PathVariable Integer idPropietario) {
+        return lugarService.findByPropietario(idPropietario);
+    }
 }
 

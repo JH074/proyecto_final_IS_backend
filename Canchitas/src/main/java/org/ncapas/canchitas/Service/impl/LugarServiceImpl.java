@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.ncapas.canchitas.DTOs.request.LugarRequestDTO;
 import org.ncapas.canchitas.DTOs.response.LugarResponseDTO;
 import org.ncapas.canchitas.entities.Lugar;
+import org.ncapas.canchitas.entities.Usuario;
 import org.ncapas.canchitas.entities.Zona;
 import org.ncapas.canchitas.exception.LugarNotFoundException;
 import org.ncapas.canchitas.repositories.LugarRepository;
+import org.ncapas.canchitas.repositories.UsuarioRepostitory;
 import org.ncapas.canchitas.repositories.ZonaRepository;
 import org.ncapas.canchitas.Service.LugarService;
 import org.ncapas.canchitas.utils.mappers.LugarMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +23,8 @@ public class LugarServiceImpl implements LugarService {
 
     private final LugarRepository lugarRepo;
     private final ZonaRepository zonaRepo;
+    private final UsuarioRepostitory usuarioRepo;
+
 
     @Override
     public List<LugarResponseDTO> findAll() {
@@ -36,22 +41,32 @@ public class LugarServiceImpl implements LugarService {
     @Override
     public LugarResponseDTO save(LugarRequestDTO dto) {
 
-        //validar campos
+        // 1) Validar campos
         validarCamposLlenos(dto);
 
-        // 1) Cargar la zona relacionada
+        // 2) Cargar la zona relacionada
         Zona zona = zonaRepo.findById(dto.getZona())
                 .orElseThrow(() -> new LugarNotFoundException("Zona no encontrada con id " + dto.getZona()));
 
-        // 2) Mapear DTO → entidad
+        // 3) Obtener usuario logueado desde el JWT
+        String correo = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();  // normalmente es el email/username
+
+        Usuario propietario = usuarioRepo.findByCorreo(correo)
+                .orElseThrow(() ->
+                        new RuntimeException("No se encontró el propietario con correo " + correo));
+
+        // 4) Mapear DTO → entidad con propietario
         Lugar nueva = Lugar.builder()
                 .nombre(dto.getNombre())
                 .direccion(dto.getDireccion())
                 .codigo(dto.getCodigo())
                 .zona(zona)
+                .propietario(propietario)
                 .build();
 
-        // 3) Guardar y devolver DTO
+        // 5) Guardar y devolver DTO
         Lugar guardada = lugarRepo.save(nueva);
         return LugarMapper.toDTO(guardada);
     }
@@ -73,5 +88,12 @@ public class LugarServiceImpl implements LugarService {
             throw new IllegalArgumentException("Todos los campos del formulario de lugar deben estar completos.");
         }
 
+    }
+
+    @Override
+    public List<LugarResponseDTO> findByPropietario(Integer idPropietario) {
+        // Busca los lugares cuyo propietario tenga ese idUsuario
+        var lugares = lugarRepo.findByPropietario_IdUsuario(idPropietario);
+        return LugarMapper.toDTOList(lugares);
     }
 }
