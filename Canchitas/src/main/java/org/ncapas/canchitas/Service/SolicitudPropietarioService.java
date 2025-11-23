@@ -1,6 +1,7 @@
 package org.ncapas.canchitas.Service;
 
 import org.ncapas.canchitas.DTOs.request.SolicitudPropietarioRequestDTO;
+import org.ncapas.canchitas.DTOs.response.EstadoSolicitudUsuarioDTO;
 import org.ncapas.canchitas.DTOs.response.SolicitudPropietarioResponseDTO;
 
 import java.util.List;
@@ -13,9 +14,12 @@ public interface SolicitudPropietarioService {
 
     SolicitudPropietarioResponseDTO obtenerPorId(Integer idSolicitud);
 
-    void rechazarSolicitud(Integer idSolicitud);
-    // Nuevo: usado por el controller para convertir a PROPIETARIO
+
     void aprobarSolicitud(Integer idSolicitud);
+
+    EstadoSolicitudUsuarioDTO obtenerEstadoPorUsuario(Integer idUsuario);
+    void rechazarSolicitud(Integer idSolicitud, String motivo);  // 👈 CAMBIADO
+
 }
 
 

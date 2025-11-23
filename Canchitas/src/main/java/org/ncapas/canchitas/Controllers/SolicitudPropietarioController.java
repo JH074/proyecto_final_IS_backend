@@ -3,6 +3,8 @@ package org.ncapas.canchitas.Controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ncapas.canchitas.DTOs.request.SolicitudPropietarioRequestDTO;
+import org.ncapas.canchitas.DTOs.response.EstadoSolicitudUsuarioDTO;
+import org.ncapas.canchitas.DTOs.response.MotivoRechazoDTO;
 import org.ncapas.canchitas.DTOs.response.SolicitudPropietarioResponseDTO;
 import org.ncapas.canchitas.Service.SolicitudPropietarioService;
 import org.springframework.http.*;
@@ -58,10 +60,28 @@ public class SolicitudPropietarioController {
     }
 
     /* Rechazar solicitud (ADMIN) */
+
+    /* 🔔 Estado de la última solicitud del usuario (CLIENTE) */
+    @PreAuthorize("hasAnyRole('CLIENTE','PROPIETARIO','ADMIN')")
+    @GetMapping("/estado-usuario/{idUsuario}")
+    public ResponseEntity<EstadoSolicitudUsuarioDTO> obtenerEstadoUsuario(
+            @PathVariable Integer idUsuario
+    ) {
+        EstadoSolicitudUsuarioDTO dto = solicitudService.obtenerEstadoPorUsuario(idUsuario);
+        return ResponseEntity.ok(dto);
+    }
+
+
+    /* Rechazar solicitud (ADMIN) */
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/rechazar")
-    public ResponseEntity<String> rechazarSolicitud(@PathVariable Integer id) {
-        solicitudService.rechazarSolicitud(id);
+    public ResponseEntity<String> rechazarSolicitud(
+            @PathVariable Integer id,
+            @RequestBody MotivoRechazoDTO body
+    ) {
+        solicitudService.rechazarSolicitud(id, body.getMotivo());
         return ResponseEntity.ok("Solicitud rechazada correctamente");
     }
+
+
 }

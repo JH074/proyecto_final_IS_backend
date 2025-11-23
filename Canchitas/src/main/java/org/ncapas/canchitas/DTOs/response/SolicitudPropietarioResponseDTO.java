@@ -25,7 +25,7 @@ public class SolicitudPropietarioResponseDTO {
 
     private Date fechaSolicitud;
     private String estadoSolicitud;
-
+    private String motivoRechazo;
     private Integer idUsuario;
     private String nombreUsuario;
     private String correoUsuario;

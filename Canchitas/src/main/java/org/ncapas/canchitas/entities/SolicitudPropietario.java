@@ -73,6 +73,10 @@ public class SolicitudPropietario {
     @Column(name = "estado_solicitud", nullable = false)
     private EstadoSolicitud estadoSolicitud;
 
+    @Column(name = "motivo_rechazo", length = 1000)
+    private String motivoRechazo;
+
+
     public enum EstadoSolicitud {
         PENDIENTE,
         APROBADA,
@@ -95,6 +99,7 @@ public class SolicitudPropietario {
     @ManyToOne
     @JoinColumn(name = "id_zona", nullable = false)
     private Zona zona;
+
 
 }
 

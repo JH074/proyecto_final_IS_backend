@@ -46,6 +46,7 @@ public class SolicitudPropietarioMapper {
                 .zona(s.getZona().getDepartamento())
                 .fechaSolicitud(s.getFechaSolicitud())
                 .estadoSolicitud(s.getEstadoSolicitud().name())
+                .motivoRechazo(s.getMotivoRechazo())
                 .idUsuario(s.getUsuario().getIdUsuario())
                 .nombreUsuario(s.getUsuario().getNombre() + " " + s.getUsuario().getApellido())
                 .correoUsuario(s.getUsuario().getCorreo())
