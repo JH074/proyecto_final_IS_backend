@@ -95,7 +95,7 @@ public class CanchaController {
     /* ------------------------------------------------------------------
      * 6) Eliminar (solo PROPIETARIO) ─ DELETE /api/canchas/{id}
      * ------------------------------------------------------------------ */
-    @PreAuthorize("hasRole('PROPIETARIO')")
+    @PreAuthorize("hasAnyRole('PROPIETARIO','ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> eliminar(@PathVariable int id) {
 

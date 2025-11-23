@@ -58,8 +58,8 @@ public class LugarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
-    /** Eliminar lugar – SOLO PROPIETARIO */
-    @PreAuthorize("hasRole('PROPIETARIO')")
+    /** Eliminar lugar – PROPIETARIO o ADMIN */
+    @PreAuthorize("hasAnyRole('PROPIETARIO','ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarLugar(@PathVariable int id) {
         lugarService.delete(id);
