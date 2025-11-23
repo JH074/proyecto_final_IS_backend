@@ -212,5 +212,29 @@ public class CanchasServiceImpl implements CanchasService {
             throw new IllegalArgumentException("Todos los campos del formulario de actualización de cancha deben estar completos.");
         }
     }
+
+
+    @Override
+    public List<CanchasResponseDTO> findByPropietario(Integer idUsuario) {
+
+        // 1) Lugares que pertenecen al propietario
+        var lugares = lugarRepo.findByPropietario_IdUsuario(idUsuario);
+
+        if (lugares.isEmpty()) {
+            return List.of();
+        }
+
+        // 2) Para cada lugar, traemos sus canchas
+        List<Cancha> canchas = new ArrayList<>();
+        for (Lugar lugar : lugares) {
+            canchas.addAll(
+                    canchaRepo.findByLugar_IdLugar(lugar.getIdLugar())
+            );
+        }
+
+        // 3) Convertir a DTO
+        return CanchaMapper.toDTOList(canchas);
+    }
+
 }
 

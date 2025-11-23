@@ -10,4 +10,5 @@ public interface LugarService {
     LugarResponseDTO findById(int id);
     LugarResponseDTO save(LugarRequestDTO lugar);
     void delete(int id);
+    List<LugarResponseDTO> findByPropietario(Integer idUsuario);
 }

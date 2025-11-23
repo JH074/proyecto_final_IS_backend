@@ -152,6 +152,15 @@ public class CanchaController {
                 t.getTipo().name()
         );
     }
+
+    @PreAuthorize("hasAnyRole('PROPIETARIO','ADMIN')")
+    @GetMapping("/mis-canchas/{idPropietario}")
+    public ResponseEntity<List<CanchasResponseDTO>> misCanchas(
+            @PathVariable Integer idPropietario) {
+
+        List<CanchasResponseDTO> lista = canchasService.findByPropietario(idPropietario);
+        return ResponseEntity.ok(lista);
+    }
 }
 
 
