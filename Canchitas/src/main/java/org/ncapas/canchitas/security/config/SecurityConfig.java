@@ -66,16 +66,16 @@ public class SecurityConfig {
                         // Crear lugar: solo PROPIETARIO
                         .requestMatchers(HttpMethod.POST, "/api/lugares")
                         .hasRole("PROPIETARIO")
-                        // Eliminar lugar: solo PROPIETARIO
+                        // Eliminar lugar: solo PROPIETARIO y admin
                         .requestMatchers(HttpMethod.DELETE, "/api/lugares/**")
-                        .hasRole("PROPIETARIO")
+                        .hasAnyRole("PROPIETARIO", "ADMIN")
 
                         // Crear cancha: solo PROPIETARIO
                         .requestMatchers(HttpMethod.POST, "/api/canchas")
                         .hasRole("PROPIETARIO")
                         // Eliminar cancha: solo PROPIETARIO
                         .requestMatchers(HttpMethod.DELETE, "/api/canchas/**")
-                        .hasRole("PROPIETARIO")
+                        .hasAnyRole("PROPIETARIO", "ADMIN")
 
                         /* ---------- Lo demás: autenticado ---------- */
                         .anyRequest().authenticated()
