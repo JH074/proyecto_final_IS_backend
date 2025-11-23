@@ -56,9 +56,18 @@ public class SecurityConfig {
                         .hasRole("ADMIN")     // si tienes algún delete masivo
 
                         /* ---------- LUGARES / CANCHAS ---------- */
-                        // ADMIN ya no puede crear ni eliminar lugares/canchas
-                        .requestMatchers(HttpMethod.GET, "/api/lugares/**").hasAnyRole("ADMIN", "PROPIETARIO")
-                        .requestMatchers(HttpMethod.GET, "/api/canchas/**").hasAnyRole("ADMIN", "PROPIETARIO")
+                        // GET lugares: admin y propietario (si quieres incluir cliente, agrégalo aquí)
+                        .requestMatchers(HttpMethod.GET, "/api/lugares/**")
+                        .hasAnyRole("ADMIN", "PROPIETARIO")
+
+                        // Jornadas de cancha: ADMIN / PROPIETARIO / CLIENTE
+                        .requestMatchers(HttpMethod.GET, "/api/canchas/*/jornadas/**")
+                        .hasAnyRole("ADMIN", "PROPIETARIO", "CLIENTE")
+
+                        // Otros GET de canchas (más generales): solo ADMIN / PROPIETARIO
+                        .requestMatchers(HttpMethod.GET, "/api/canchas/**")
+                        .hasAnyRole("ADMIN", "PROPIETARIO")
+
                         // 🔔 endpoint para la notificación: lo puede usar CLIENTE/PROPIETARIO/ADMIN
                         .requestMatchers(HttpMethod.GET, "/api/solicitudes/estado-usuario/**")
                         .hasAnyRole("CLIENTE", "PROPIETARIO", "ADMIN")
@@ -66,14 +75,14 @@ public class SecurityConfig {
                         // Crear lugar: solo PROPIETARIO
                         .requestMatchers(HttpMethod.POST, "/api/lugares")
                         .hasRole("PROPIETARIO")
-                        // Eliminar lugar: solo PROPIETARIO y admin
+                        // Eliminar lugar: PROPIETARIO o ADMIN
                         .requestMatchers(HttpMethod.DELETE, "/api/lugares/**")
                         .hasAnyRole("PROPIETARIO", "ADMIN")
 
                         // Crear cancha: solo PROPIETARIO
                         .requestMatchers(HttpMethod.POST, "/api/canchas")
                         .hasRole("PROPIETARIO")
-                        // Eliminar cancha: solo PROPIETARIO
+                        // Eliminar cancha: PROPIETARIO o ADMIN
                         .requestMatchers(HttpMethod.DELETE, "/api/canchas/**")
                         .hasAnyRole("PROPIETARIO", "ADMIN")
 
@@ -94,4 +103,3 @@ public class SecurityConfig {
         return cfg.getAuthenticationManager();
     }
 }
-
