@@ -14,10 +14,22 @@ public class DataseederRol implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (rolRepo.count() == 0) {
-            rolRepo.save(Rol.builder().nombre("ADMIN").build());
-            rolRepo.save(Rol.builder().nombre("CLIENTE").build());
-            System.out.println("Roles precargados!");
-        }
+
+        crearRolSiNoExiste("ADMIN");
+        crearRolSiNoExiste("PROPIETARIO");
+        crearRolSiNoExiste("CLIENTE");
+
+        System.out.println("Roles verificados/creados: ADMIN, PROPIETARIO, CLIENTE");
+    }
+
+    private void crearRolSiNoExiste(String nombre) {
+        rolRepo.findByNombreIgnoreCase(nombre)
+                .orElseGet(() -> {
+                    Rol rol = Rol.builder()
+                            .nombre(nombre)
+                            .build();
+                    return rolRepo.save(rol);
+                });
     }
 }
+

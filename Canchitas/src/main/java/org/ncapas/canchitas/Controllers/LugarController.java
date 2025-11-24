@@ -6,7 +6,6 @@ import org.ncapas.canchitas.DTOs.request.LugarRequestDTO;
 import org.ncapas.canchitas.DTOs.response.LugarResponseDTO;
 import org.ncapas.canchitas.DTOs.response.ZonaComboDTO;
 import org.ncapas.canchitas.Service.LugarService;
-import org.ncapas.canchitas.entities.Zona;
 import org.ncapas.canchitas.repositories.ZonaRepository;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LugarController {
 
-    private final LugarService   lugarService;
+    private final LugarService lugarService;
     private final ZonaRepository zonaRepo;
 
     /* ---------- ZONAS (combo) ---------- */
@@ -28,8 +27,10 @@ public class LugarController {
     @GetMapping("/zonas")
     public List<ZonaComboDTO> listarZonas() {
         return zonaRepo.findAll().stream()
-                .map(z -> new ZonaComboDTO(z.getIdZona(),
-                        z.getDepartamento() + " – " + z.getDistrito()))
+                .map(z -> new ZonaComboDTO(
+                        z.getIdZona(),
+                        z.getDepartamento() + " – " + z.getDistrito()
+                ))
                 .toList();
     }
 
@@ -47,8 +48,8 @@ public class LugarController {
         return ResponseEntity.ok(lugarService.findById(id));
     }
 
-    /** Crear lugar – SOLO rol ADMIN */
-    @PreAuthorize("hasRole('ADMIN')")
+    /** Crear lugar – SOLO PROPIETARIO */
+    @PreAuthorize("hasRole('PROPIETARIO')")
     @PostMapping
     public ResponseEntity<LugarResponseDTO> crearLugar(
             @Valid @RequestBody LugarRequestDTO dto) {
@@ -57,11 +58,19 @@ public class LugarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
-    /** Eliminar lugar – SOLO rol ADMIN */
-    @PreAuthorize("hasRole('ADMIN')")
+    /** Eliminar lugar – PROPIETARIO o ADMIN */
+    @PreAuthorize("hasAnyRole('PROPIETARIO','ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarLugar(@PathVariable int id) {
         lugarService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    /** 🔹 Mis lugares – SOLO PROPIETARIO o ADMIN (si quieres) */
+    @PreAuthorize("hasAnyRole('PROPIETARIO','ADMIN')")
+    @GetMapping("/mis-lugares/{idPropietario}")
+    public List<LugarResponseDTO> listarMisLugares(@PathVariable Integer idPropietario) {
+        return lugarService.findByPropietario(idPropietario);
+    }
 }
+

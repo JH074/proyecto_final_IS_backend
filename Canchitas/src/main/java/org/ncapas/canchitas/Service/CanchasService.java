@@ -17,6 +17,7 @@ public interface CanchasService {
     void delete(int id);
     List<JornadaResponseDTO> findJornadasByCanchaAndDia(int canchaId,
                                                         Semana.Dia dia);
+    List<CanchasResponseDTO> findByPropietario(Integer idUsuario);
 }
 
 
