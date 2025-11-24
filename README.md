@@ -55,9 +55,10 @@ src/main/java/org/ncapas/canchitas/
 
 ## Requisitos previos 
 
-* Java 21
-* Maven
-* PostgreSQL 
+- Java 21
+- Maven
+- PostgreSQL
+- Docker / Docker Compose
 
 ## Instalación y ejecución
 
@@ -65,6 +66,7 @@ src/main/java/org/ncapas/canchitas/
 
 ```bash
   git clone https://github.com/JH074/proyecto_final_IS_backend.git
+  cd proyecto_final_IS_backend
 ```
 
 2. Configurar la base de datos en application.yml:
@@ -87,7 +89,13 @@ src/main/java/org/ncapas/canchitas/
 
 ```
 
-3. Ejecutar la aplicación 
+3. Ejecutar la aplicación
+
+Con Docker
+```bash
+  cd Canchitas
+  docker-compose up --build -d
+```
 
 Accedé a la API en: http://localhost:8080
 
@@ -120,9 +128,3 @@ Al hacer las peticiones:
 * Ir a la pestaña Authorization.
 * Tipo: Bearer Token.
 * Pegar el token en el campo.
-
-Para acceder a la colección de Postman:
-```bash 
-    docs/Canchitas.postman-collection.json
-```
-
